@@ -104,6 +104,14 @@ class ProblemsView(
     }
 
     private fun renderErrorNode(file: File, diagnostic: Diagnostic, parentElement: HTMLElement) = parentElement.append.li {
+        val text = diagnostic.message
+        // TODO: temporary. Need new icon and styles
+        div {
+            classes = setOf("icon", "error")
+            onDoubleClickFunction = {
+                copyTextToClipboard(text)
+            }
+        }
         classes = setOf("tree-node")
         tabIndex = "-1"
         div {
@@ -124,6 +132,24 @@ class ProblemsView(
         onKeyUpFunction = fun(event: Event) {
             if (event !is KeyboardEvent || event.keyCode != KeyCode.ENTER.code) return
             setCursor(file.name, diagnostic.interval.start.line, diagnostic.interval.start.ch)
+        }
+    }
+
+    /**
+     * Copy text to clipboard.
+     * @param text - string text
+     */
+    private fun copyTextToClipboard(text: String) {
+        val copyDiv = document.createElement("div")
+        if (copyDiv is HTMLElement) {
+            copyDiv.contentEditable = "true"
+            document.body!!.appendChild(copyDiv)
+            copyDiv.innerHTML = text
+            copyDiv.innerHTML = copyDiv.textContent!!
+            copyDiv.focus()
+            document.execCommand("SelectAll")
+            document.execCommand("Copy")
+            document.body!!.removeChild(copyDiv)
         }
     }
 }

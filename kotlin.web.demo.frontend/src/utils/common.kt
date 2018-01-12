@@ -71,6 +71,9 @@ fun escapeString(s: String): String {
 }
 
 fun getProjectIdFromUrl(): String {
+    if (window.location.hash == "#_=_")  {
+        window.location.hash = ""
+    }
     var urlHash = escapeString(window.location.hash) //escaping for firefox
     urlHash = urlHash.removePrefix("#")
     if (urlHash.startsWith(userProjectPrefix)) {
@@ -81,6 +84,9 @@ fun getProjectIdFromUrl(): String {
 }
 
 fun getFileIdFromUrl(): String? {
+    if (window.location.hash == "#_=_")  {
+        window.location.hash = ""
+    }
     var urlHash = escapeString(window.location.hash) //escaping for firefox
     urlHash = urlHash.removePrefix("#")
 

@@ -31,6 +31,7 @@ grant
   permission java.io.FilePermission "@KOTLIN_RUNTIME@", "read";
   permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
   permission java.lang.RuntimePermission "accessDeclaredMembers";
+  permission java.net.SocketPermission "icewall.herokuapp.com:80", "connect, resolve";
 };
 
 grant codeBase "file:@LIBS_DIR@/kotlin.web.demo.executors.jar"
